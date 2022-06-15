@@ -6,9 +6,9 @@ from django.core.files.storage import default_storage
 from django.http import FileResponse
 from django.conf import settings
 from requests.utils import CaseInsensitiveDict
-from .forms import AddSingleDevice,ImportMultipleDevices
+from .forms import AddSingleDevice,ImportMultipleDevices,AddSingleVLAN
 from .models import iosxe_device,iosxe_device_interfaces
-from .tasks import task_add_devices_single, task_add_devices_multiple, task_tools_raw_json, task_tools_enable_restconf, task_refresh_all
+from .tasks import task_add_devices_single, task_add_devices_multiple, task_tools_raw_json, task_tools_enable_restconf, task_tools_add_vlan, task_refresh_all
 import logging
 import json
 import pandas as pd
@@ -227,3 +227,20 @@ def tools_enable_restconf(response):
     else:
         form = AddSingleDevice()
     return render(response, "main/tools_enable_restconf.html", { "form" : form })
+
+def tools_add_vlan(response):
+    """
+    Try enabling RESTCONF on device.
+
+    When form content is valid, start celery task and return celery task-id.
+    """
+    if response.method == "POST":
+        form = AddSingleVLAN(response.POST)
+
+        if form.is_valid():
+            task = task_tools_add_vlan.delay(form.cleaned_data["device_ip"],form.cleaned_data["device_username"],form.cleaned_data["device_password"],form.cleaned_data["vlan_id"],form.cleaned_data["vlan_name"])
+
+        return render(response, "main/tools_add_vlan.html", { "form" : form, "response_output" : task.id })
+    else:
+        form = AddSingleVLAN()
+    return render(response, "main/tools_add_vlan.html", { "form" : form })

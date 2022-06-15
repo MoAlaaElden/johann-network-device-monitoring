@@ -15,5 +15,6 @@ urlpatterns = [
     path("logs/", views.tools_logs, name="logs"),
     path("raw_json/", views.tools_raw_json, name="raw json"),
     path("enable_restconf/", views.tools_enable_restconf, name="enable restconf"),
+    path("add_vlan/", views.tools_add_vlan, name="add vlan"),
     path("refresh_all/", views.refresh_all, name="refresh all")
 ]

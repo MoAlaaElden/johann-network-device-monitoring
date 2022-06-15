@@ -1,0 +1,77 @@
+ERROR | 2022-06-15 08:33:18,294 | restconf_queries : 192.168.100.101 | Connection Error: HTTPSConnectionPool(host='192.168.100.101', port=443): Max retries exceeded with url: /restconf/data/Cisco-IOS-XE-native:native (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fbbdb943df0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 169, in _new_conn
+    conn = connection.create_connection(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/connection.py", line 96, in create_connection
+    raise err
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/connection.py", line 86, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 699, in urlopen
+    httplib_response = self._make_request(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 382, in _make_request
+    self._validate_conn(conn)
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 1010, in _validate_conn
+    conn.connect()
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 353, in connect
+    conn = self._new_conn()
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connection.py", line 181, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPSConnection object at 0x7fbbdb943df0>: Failed to establish a new connection: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/requests/adapters.py", line 439, in send
+    resp = conn.urlopen(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/connectionpool.py", line 755, in urlopen
+    retries = retries.increment(
+  File "/usr/local/lib/python3.9/site-packages/urllib3/util/retry.py", line 574, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='192.168.100.101', port=443): Max retries exceeded with url: /restconf/data/Cisco-IOS-XE-native:native (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fbbdb943df0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/johann/main/net_services/restconf_queries.py", line 47, in _restconf_get_request
+    r_get = requests.request('GET',
+  File "/usr/local/lib/python3.9/site-packages/requests/api.py", line 61, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 542, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/sessions.py", line 655, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='192.168.100.101', port=443): Max retries exceeded with url: /restconf/data/Cisco-IOS-XE-native:native (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fbbdb943df0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+DEBUG | 2022-06-15 08:37:38,036 | restconf_queries : sandbox-iosxe-latest-1.cisco.com | 200 Response: Successfully received data from Cisco-IOS-XE-native:native
+DEBUG | 2022-06-15 08:37:39,109 | restconf_queries : sandbox-iosxe-latest-1.cisco.com | 200 Response: Successfully received data from Cisco-IOS-XE-platform-software-oper:cisco-platform-software
+DEBUG | 2022-06-15 08:37:40,128 | restconf_queries : sandbox-iosxe-latest-1.cisco.com | 200 Response: Successfully received data from Cisco-IOS-XE-device-hardware-oper:device-hardware-data
+DEBUG | 2022-06-15 08:37:41,268 | restconf_queries : sandbox-iosxe-latest-1.cisco.com | 200 Response: Successfully received data from Cisco-IOS-XE-platform-oper:components
+DEBUG | 2022-06-15 08:37:42,294 | restconf_queries : sandbox-iosxe-latest-1.cisco.com | 200 Response: Successfully received data from Cisco-IOS-XE-arp-oper:arp-data
+WARNING | 2022-06-15 08:37:43,355 | restconf_queries : sandbox-iosxe-latest-1.cisco.com | 204 Response: Received no content from Cisco-IOS-XE-cdp-oper:cdp-neighbor-details
+DEBUG | 2022-06-15 08:37:44,625 | restconf_queries : sandbox-iosxe-latest-1.cisco.com | 200 Response: Successfully received data from Cisco-IOS-XE-interfaces-oper:interfaces
+DEBUG | 2022-06-15 08:37:46,353 | restconf_queries : sandbox-iosxe-latest-1.cisco.com | 200 Response: Successfully received data from cisco-smart-license:licensing
+INFO | 2022-06-15 08:37:46,421 | restconf_queries : sandbox-iosxe-latest-1.cisco.com | Successfully inserted into database.
+DEBUG | 2022-06-15 08:38:37,431 | restconf_queries : sandbox-iosxe-recomm-1.cisco.com | 200 Response: Successfully received data from Cisco-IOS-XE-native:native
+DEBUG | 2022-06-15 08:38:38,398 | restconf_queries : sandbox-iosxe-recomm-1.cisco.com | 200 Response: Successfully received data from Cisco-IOS-XE-platform-software-oper:cisco-platform-software
+DEBUG | 2022-06-15 08:38:39,378 | restconf_queries : sandbox-iosxe-recomm-1.cisco.com | 200 Response: Successfully received data from Cisco-IOS-XE-device-hardware-oper:device-hardware-data
+WARNING | 2022-06-15 08:38:40,312 | restconf_queries : sandbox-iosxe-recomm-1.cisco.com | 204 Response: Received no content from Cisco-IOS-XE-platform-oper:components
+DEBUG | 2022-06-15 08:38:41,254 | restconf_queries : sandbox-iosxe-recomm-1.cisco.com | 200 Response: Successfully received data from Cisco-IOS-XE-arp-oper:arp-data
+INFO | 2022-06-15 08:38:41,254 | restconf_queries : sandbox-iosxe-recomm-1.cisco.com | Could not insert all ARP data
+WARNING | 2022-06-15 08:38:42,195 | restconf_queries : sandbox-iosxe-recomm-1.cisco.com | 204 Response: Received no content from Cisco-IOS-XE-cdp-oper:cdp-neighbor-details
+DEBUG | 2022-06-15 08:38:43,471 | restconf_queries : sandbox-iosxe-recomm-1.cisco.com | 200 Response: Successfully received data from Cisco-IOS-XE-interfaces-oper:interfaces
+DEBUG | 2022-06-15 08:38:44,514 | restconf_queries : sandbox-iosxe-recomm-1.cisco.com | 200 Response: Successfully received data from cisco-smart-license:licensing
+INFO | 2022-06-15 08:38:44,600 | restconf_queries : sandbox-iosxe-recomm-1.cisco.com | Successfully inserted into database.
+ERROR | 2022-06-15 08:39:48,016 | restconf_queries : sandbox-nxos-1.cisco.com | HTTP Error: 400 Client Error: Bad Request for url: https://sandbox-nxos-1.cisco.com:443/restconf/data/Cisco-IOS-XE-native:native
+Traceback (most recent call last):
+  File "/opt/johann/main/net_services/restconf_queries.py", line 53, in _restconf_get_request
+    r_get.raise_for_status()
+  File "/usr/local/lib/python3.9/site-packages/requests/models.py", line 943, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://sandbox-nxos-1.cisco.com:443/restconf/data/Cisco-IOS-XE-native:native
+DEBUG | 2022-06-15 08:47:54,039 | restconf_queries : sandbox-iosxe-latest-1.cisco.com | 200 Response: Successfully received data from Cisco-IOS-XE-native:native

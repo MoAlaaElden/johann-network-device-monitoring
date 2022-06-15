@@ -1,0 +1,5 @@
+^CGracefully stopping... (press Ctrl+C again to force)
+Stopping docker_nginx_1         ... done
+Stopping docker_celery_worker_1 ... done
+Stopping docker_johann_1        ... done
+Stopping docker_redis_1         ... done

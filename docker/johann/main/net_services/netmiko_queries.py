@@ -36,3 +36,31 @@ def enable_restconf_iosxe(device_ip,device_user,device_pw):
     except Exception as e:
         logger.exception("Error when trying to enable RESTCONF on {}: {}".format(device_ip,e))
         return "Error when trying to enable RESTCONF. Please check logs."
+
+def add_vlan_ios(device_ip,device_user,device_pw):
+    """
+    Try to enably RESTCONF with netmiko library
+
+    :return: Output or Error Message (str)
+    """
+    try:
+
+        device_credentials = {
+            'device_type': 'cisco_ios',
+            'host':   device_ip,
+            'username': device_user,
+            'password': device_pw,
+        }
+
+        ios_device = ConnectHandler(**device_credentials)
+
+        config_commands = [ 'vlan 450',
+                            'name Test_VLAN450']
+
+        output = ios_device.send_config_set(config_commands)
+
+        return output
+    
+    except Exception as e:
+        logger.exception("Error when trying to add VLAN on {}: {}".format(device_ip,e))
+        return "Error when trying to add VLAN. Please check logs."

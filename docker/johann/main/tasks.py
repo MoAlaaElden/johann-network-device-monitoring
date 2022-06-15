@@ -11,7 +11,7 @@ from celery import shared_task
 from .models import iosxe_device,iosxe_device_interfaces, iosxe_device_cred
 from django.core.files.storage import default_storage
 from .net_services.restconf_queries import new_iosxe_device
-from .net_services.netmiko_queries import enable_restconf_iosxe
+from .net_services.netmiko_queries import enable_restconf_iosxe, add_vlan_ios
 
 logger = logging.getLogger("applogger")
 
@@ -128,5 +128,12 @@ def task_tools_raw_json(self,device_ip,device_username,device_password):
 def task_tools_enable_restconf(self,device_ip,device_username,device_password):
     self.update_state(state='Trying to enable RESTCONF')
     r_content = enable_restconf_iosxe(device_ip,device_username,device_password)
+    self.update_state(state='COMPLETE')
+    return 200, r_content
+
+@shared_task(bind=True,track_started=True)
+def task_tools_add_vlan(self,device_ip,device_username,device_password):
+    self.update_state(state='Trying to configure VLAN')
+    r_content = add_vlan_ios(device_ip,device_username,device_password)
     self.update_state(state='COMPLETE')
     return 200, r_content
